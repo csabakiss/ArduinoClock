@@ -1,4 +1,4 @@
-#include <DHT.h>
+﻿#include <DHT.h>
 #include <TimeLib.h>
 #include <Wire.h>
 #include <WiFiEsp.h>
@@ -42,7 +42,7 @@ void setup()
 	// DISPLAY
 	display.begin();
 	display.clearDisplay();
-	display.setFont(u8x8_font_pxplusibmcga_f);
+	display.setFont(u8x8_font_pxplusibmcgathin_f);
 
 	Serial1.begin(57600);
 	WiFi.init(&Serial1);
@@ -102,7 +102,7 @@ void displayTemp(int x, int y, float temperature)
 	if (!isnan(temperature))
 	{
 		char buffer[8];
-		sprintf_P(buffer, (const char*)F("%.2d �C"), (int)temperature);
+		sprintf_P(buffer, (const char*)F("%.2d °C"), (int)temperature);
 		display.drawUTF8(x, y, buffer);
 	}
 }
