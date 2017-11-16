@@ -1,6 +1,5 @@
 #pragma once
 #include "CommonState.h"
-#include <Arduino.h>
 
 class ModuleBase
 {

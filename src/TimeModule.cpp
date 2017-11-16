@@ -31,7 +31,7 @@ void TimeModule::loop()
 		nextSync = now() + NTP_REFRESH_TIME_INTERVAL;
 	}
 
-	state -> time = now();
+	state->time = now();
 }
 
 time_t TimeModule::provideLocalTimeUsingWiFi()

@@ -18,6 +18,6 @@ void DHTModule::init(CommonState* state)
 
 void DHTModule::loop()
 {	
-	state -> temperature = dht.readTemperature();
-	state -> humidity = dht.readHumidity();
+	state->temperature = dht.readTemperature();
+	state->humidity = dht.readHumidity();
 }

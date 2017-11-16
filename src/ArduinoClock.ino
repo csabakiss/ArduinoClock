@@ -1,4 +1,5 @@
-﻿#include <Wire.h>
+﻿#include <Arduino.h>
+#include <Wire.h>
 
 #include "Config.h"
 #include "CommonState.h"
@@ -12,22 +13,25 @@
 #include "DisplayModule.h"
 #include "EmonCmsLogger.h"
 #include "TimeModule.h"
+#include "AlarmModule.h"
+
+//#define DEBUG
 
 CommonState state;
 
-ModuleBase* modules[] = { new DisplayModule(), new TimeModule(), new DHTModule(), new EmonCmsLogger() };
-byte nModules = 4;
+ModuleBase* modules[] = { new DisplayModule(), new TimeModule(), new DHTModule(), new EmonCmsLogger(), new AlarmModule() };
+byte nModules = 5;
 
 void setup()
 {
-	Serial.begin(57600);	
-	Serial1.begin(57600);
+	Serial.begin(115200);	
+	Serial1.begin(19200);
 
 	WiFi.init(&Serial1);
 
 	for (byte i = 0; i < nModules; i++)
 	{
-		modules[i] -> init(&state);
+		modules[i]->init(&state);
 	}
 }
 
@@ -35,8 +39,22 @@ void loop()
 {
 	for (byte i = 0; i < nModules; i++)
 	{
-		modules[i] -> loop();
+		modules[i]->loop();
 	}	
 
-	delay(400);
+#ifdef DEBUG
+	Serial.print(F("free ram:"));
+	Serial.println(freeRam());
+#endif // DEBUG
+
+
+	delay(250);
 }
+
+#ifdef DEBUG
+int freeRam() {
+	extern int __heap_start, *__brkval;
+	int v;
+	return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
+}
+#endif

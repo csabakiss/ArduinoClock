@@ -48,11 +48,11 @@
     <ClInclude Include="TimeModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AlarmModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CommonState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TimeModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AlarmModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

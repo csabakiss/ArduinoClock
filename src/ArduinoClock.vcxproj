@@ -84,6 +84,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlarmModule.h" />
     <ClInclude Include="CommonState.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="DHTModule.h" />
@@ -96,7 +97,7 @@
     <ClInclude Include="__vm\.src.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CommonState.cpp" />
+    <ClCompile Include="AlarmModule.cpp" />
     <ClCompile Include="DHTModule.cpp" />
     <ClCompile Include="DisplayModule.cpp" />
     <ClCompile Include="EmonCmsLogger.cpp" />
