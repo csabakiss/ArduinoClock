@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlarmModule.h" />
+    <ClInclude Include="AlarmWebSettingModule.h" />
     <ClInclude Include="CommonState.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="DHTModule.h" />
@@ -98,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AlarmModule.cpp" />
+    <ClCompile Include="AlarmWebSettingModule.cpp" />
     <ClCompile Include="DHTModule.cpp" />
     <ClCompile Include="DisplayModule.cpp" />
     <ClCompile Include="EmonCmsLogger.cpp" />

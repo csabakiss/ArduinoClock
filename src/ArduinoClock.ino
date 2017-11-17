@@ -14,13 +14,14 @@
 #include "EmonCmsLogger.h"
 #include "TimeModule.h"
 #include "AlarmModule.h"
+#include "AlarmWebSettingModule.h"
 
 //#define DEBUG
 
 CommonState state;
 
-ModuleBase* modules[] = { new DisplayModule(), new TimeModule(), new DHTModule(), new EmonCmsLogger(), new AlarmModule() };
-byte nModules = 5;
+ModuleBase* modules[] = { new DisplayModule(), new TimeModule(), new DHTModule(), new EmonCmsLogger(), new AlarmModule(), new AlarmWebSettingModule() };
+byte nModules = 6;
 
 void setup()
 {

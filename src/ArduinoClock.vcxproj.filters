@@ -51,6 +51,9 @@
     <ClInclude Include="AlarmModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AlarmWebSettingModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleBase.cpp">
@@ -69,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AlarmModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AlarmWebSettingModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

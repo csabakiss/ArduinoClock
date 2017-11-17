@@ -1,18 +1,16 @@
 #pragma once
-
 #include <TimeLib.h>
 #include <WiFiEsp.h>
 #include <WiFiEspUdp.h>
 
 #include "ModuleBase.h"
 
-class AlarmModule :
+class AlarmWebSettingModule :
 	public ModuleBase
 {
 public:
-	AlarmModule();
-	~AlarmModule();
-	
+	AlarmWebSettingModule();
+	~AlarmWebSettingModule();
 	void init(CommonState * state);
 	void loop();
 
