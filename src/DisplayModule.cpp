@@ -19,9 +19,9 @@ void DisplayModule::init(CommonState* state)
 	display.setFont(u8x8_font_pxplusibmcgathin_f);
 
 	while (WiFi.status() == WL_NO_SHIELD) {
-		// Don't continue if there is no wifi shield
-		display.draw2x2String(2, 2, "NYISTA");
-		display.draw2x2String(0, 4, "INTERNET");
+		// Don't continue if there is no wifi shield		
+		display.println(F("NYISTA"));
+		display.println(F("INTERNET"));
 		delay(5000);
 		display.clearDisplay();
 	}
@@ -38,13 +38,29 @@ void DisplayModule::loop()
 
 void DisplayModule::displayAlarm(int x, int y)
 {
-	char buffer[13] = "Alarm: off  ";
 	if (state->isAlarmOn)
 	{
-		sprintf_P(buffer, (const char*)F("Alarm: %.2d:%.2d"), state->alarmHour, state->alarmMin);
-	}
+		uint8_t alarm[8] = {
+			0b00110000,
+			0b01111000,
+			0b11111100,
+			0b11100101,
+			0b11011101,
+			0b11011100,
+			0b01111000,
+			0b00110000,
+		};
 
-	display.drawString(x, y, buffer);
+		display.drawTile(0, 0, 1, alarm);
+		
+		char buffer[6];
+		sprintf_P(buffer, (const char*)F("%.2d:%.2d"), state->alarmHour, state->alarmMin);
+		display.drawString(x + 2, y, buffer);
+	}
+	else
+	{
+		display.clearLine(0);
+	}
 }
 
 void DisplayModule::displayDate(int x, int y)
