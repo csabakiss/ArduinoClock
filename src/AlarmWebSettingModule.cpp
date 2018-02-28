@@ -152,14 +152,10 @@ void AlarmWebSettingModule::returnHttpOk(WiFiEspClient* client)
 
 void AlarmWebSettingModule::printPage(WiFiEspClient* client)
 {
-	Serial.println(F("GET resp"));
-
-	// send a standard http response header
-	// use \r\n instead of many println statements to speedup data send
 	client->print(F(
 		"HTTP/1.1 200 OK\r\n"
 		"Content-Type: text/html\r\n"
-		"Connection: close\r\n"  // the connection will be closed after completion of the response		
+		"Connection: close\r\n"
 		"\r\n"));
 
 	client->print(F(
