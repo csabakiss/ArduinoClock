@@ -6,6 +6,10 @@
 
 #include "ModuleBase.h"
 
+// The number of seconds to turn the lights on before the alarm goes off
+#define LIGHT_DURATION_SECONDS 60
+#define LIGHT_PIN 11
+
 class AlarmModule :
 	public ModuleBase
 {
@@ -17,12 +21,6 @@ public:
 	void loop();
 
 private:
-	WiFiEspServer server = WiFiEspServer(80);
-
-	void handleWebServerConnections();
-	byte getNexStatus(char c, byte status);
-	void returnHttpError(WiFiEspClient * client);
-	void returnHttpOk(WiFiEspClient * client);
-	void printPage(WiFiEspClient * client);
+	long getSecondsToAlarm();
 };
 
