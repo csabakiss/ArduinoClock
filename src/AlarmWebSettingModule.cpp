@@ -27,9 +27,7 @@ void AlarmWebSettingModule::handleWebServerConnections()
 {
 	WiFiEspClient client = server.available();
 	if (client)
-	{
-		// an http request ends with a blank line		
-		boolean currentLineIsBlank = true;
+	{		
 		byte attempts = 0;
 
 		/*
@@ -63,7 +61,7 @@ void AlarmWebSettingModule::handleWebServerConnections()
 					continue;
 				}
 
-				status = getNexStatus(c, status);
+				status = getNextStatus(c, status);
 				if (status == 32) { hour = DIGIT(c); }
 				else if (status == 33) { hour = hour * 10 + DIGIT(c); }
 				else if (status == 42) { minute = DIGIT(c); }
@@ -115,7 +113,7 @@ void AlarmWebSettingModule::handleWebServerConnections()
 	}
 }
 
-byte AlarmWebSettingModule::getNexStatus(char c, byte status)
+byte AlarmWebSettingModule::getNextStatus(char c, byte status)
 {
 	bool isDigit = c >= '0' && c <= '9';
 

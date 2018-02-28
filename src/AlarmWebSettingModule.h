@@ -18,7 +18,7 @@ private:
 	WiFiEspServer server = WiFiEspServer(80);
 
 	void handleWebServerConnections();
-	byte getNexStatus(char c, byte status);
+	byte getNextStatus(char c, byte status);
 	void returnHttpError(WiFiEspClient * client);
 	void returnHttpOk(WiFiEspClient * client);
 	void printPage(WiFiEspClient * client);
