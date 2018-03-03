@@ -22,11 +22,10 @@ public:
 	void loop();	
 
 private:	
-	const int NTP_UDP_TIMEOUT = 2000;    // timeout in miliseconds to wait for an UDP packet to arrive	
+	const int NTP_UDP_TIMEOUT = 4000;    // timeout in miliseconds to wait for an UDP packet to arrive	
 	const unsigned int localPort = 2390;        // local port to listen for UDP packets
 
-	byte packetBuffer[NTP_PACKET_SIZE];
-	unsigned long lastWifiConnectionAttempt = 0;
+	byte packetBuffer[NTP_PACKET_SIZE];	
 	time_t nextSync;
 	WiFiEspUDP udp = WiFiEspUDP();
 

@@ -12,9 +12,7 @@ void TimeModule::init(CommonState* state)
 {
 	Serial.println(F("time.init"));
 	ModuleBase::init(state);	
-	
-	setTime(provideLocalTimeUsingWiFi());
-	nextSync = now() + NTP_REFRESH_TIME_INTERVAL;
+	nextSync = now();
 }
 
 void TimeModule::loop()
@@ -22,13 +20,15 @@ void TimeModule::loop()
 	if (now() > nextSync)
 	{
 		Serial.println(F("[time] time sync.."));
-		time_t currentTime = provideLocalTimeUsingWiFi();
+		time_t currentTime = provideLocalTimeUsingWiFi();		
 		if (currentTime != 0)
 		{
 			setTime(currentTime);
+			nextSync = now() + NTP_REFRESH_TIME_INTERVAL;
 		}
-
-		nextSync = now() + NTP_REFRESH_TIME_INTERVAL;
+		else {
+			nextSync = now() + 30UL;
+		}
 	}
 
 	state->time = now();
@@ -38,15 +38,7 @@ time_t TimeModule::provideLocalTimeUsingWiFi()
 {
 	if (WiFi.status() != WL_CONNECTED)
 	{
-		if (lastWifiConnectionAttempt == 0 || lastWifiConnectionAttempt + 30000UL < millis())
-		{
-			lastWifiConnectionAttempt = millis();
-			if (WiFi.begin(WifiSsid, WifiPass) == WL_CONNECT_FAILED)
-			{
-				return 0;
-			}
-		}
-		else
+		if (WiFi.begin(WifiSsid, WifiPass) == WL_CONNECT_FAILED)
 		{
 			return 0;
 		}

@@ -27,8 +27,7 @@ void AlarmModule::loop()
 		if (secondsToAlarm < LIGHT_DURATION_SECONDS)
 		{
 			if (secondsToAlarm > 0) {
-				int output = (int)((float)(LIGHT_DURATION_SECONDS - secondsToAlarm) / (float)LIGHT_DURATION_SECONDS * 128);				
-				Serial.println(output);
+				int output = (int)((float)(LIGHT_DURATION_SECONDS - secondsToAlarm) / (float)LIGHT_DURATION_SECONDS * 128.0);								
 				analogWrite(LIGHT_PIN, output);
 				hasOutput = true;
 			}

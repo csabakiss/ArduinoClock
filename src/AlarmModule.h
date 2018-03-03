@@ -7,7 +7,7 @@
 #include "ModuleBase.h"
 
 // The number of seconds to turn the lights on before the alarm goes off
-#define LIGHT_DURATION_SECONDS 60
+#define LIGHT_DURATION_SECONDS 600
 #define LIGHT_PIN 11
 
 class AlarmModule :
