@@ -58,7 +58,7 @@ time_t TimeModule::getCurrentLocalTime() {
 	time_t currentTimeUTC = getCurrentUtcTime();
 	if (currentTimeUTC > 0)
 	{
-		const unsigned long timeZoneOffset = 8UL * 3600UL;
+		const unsigned long timeZoneOffset = 7UL * 3600UL;
 		return currentTimeUTC - timeZoneOffset;
 	}
 

@@ -11,7 +11,7 @@
 
 #include "DHTModule.h"
 #include "DisplayModule.h"
-#include "EmonCmsLogger.h"
+//#include "EmonCmsLogger.h"
 #include "TimeModule.h"
 #include "AlarmModule.h"
 #include "AlarmWebSettingModule.h"
@@ -20,8 +20,8 @@
 
 CommonState state;
 
-ModuleBase* modules[] = { new DisplayModule(), new TimeModule(), new DHTModule(), new EmonCmsLogger(), new AlarmModule(), new AlarmWebSettingModule() };
-byte nModules = 6;
+ModuleBase* modules[] = { new DisplayModule(), new TimeModule(), new DHTModule(), new AlarmModule(), new AlarmWebSettingModule() };
+byte nModules = 5;
 
 void setup()
 {
@@ -46,7 +46,7 @@ void loop()
 #ifdef DEBUG
 	Serial.print(F("free ram:"));
 	Serial.println(freeRam());
-#endif // DEBUG
+#endif
 
 
 	delay(250);

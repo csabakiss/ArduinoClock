@@ -8,3 +8,7 @@ Display:
 
 ESP:
  Connection: 4(RX),5(TX) -> TX,RX; 3V3 -> Enable
+
+LED:
+ Led Pins: + -> VIN (+12V), - -> GND
+ Transistor: MOSFET N, 1 -> Arduino 11, 2 -> Led -(negative), 3 -> GND
