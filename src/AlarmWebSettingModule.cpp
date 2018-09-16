@@ -1,6 +1,8 @@
 #include "AlarmWebSettingModule.h"
+#include <eeprom.h>
 
-#define DIGIT(c) c - '0';
+#define DIGIT(c) c - '0'
+#define ALARM_OFF 255
 
 AlarmWebSettingModule::AlarmWebSettingModule()
 {
@@ -15,6 +17,26 @@ void AlarmWebSettingModule::init(CommonState* state)
 {
 	Serial.println(F("alarm_setting.init"));
 	ModuleBase::init(state);
+
+	byte savedHour = EEPROM.read(0);
+	byte savedMinute = EEPROM.read(1);
+
+	if (savedHour != ALARM_OFF && savedMinute != ALARM_OFF)
+	{
+		state->isAlarmOn = true;
+		state->alarmHour = savedHour;
+		state->alarmMin = savedMinute;
+#ifdef DEBUG
+		Serial.print(savedHour);
+		Serial.print(':');
+		Serial.println(savedMinute);
+#endif // DEBUG
+	}
+	else
+	{
+		state->isAlarmOn = false;
+	}
+
 	server.begin();
 }
 
@@ -43,8 +65,8 @@ void AlarmWebSettingModule::handleWebServerConnections()
 		*/
 		byte status = 0;
 
-		byte hour = -1;
-		byte minute = -1;
+		byte hour = ALARM_OFF;
+		byte minute = ALARM_OFF;
 		bool isGet = false;
 		bool isPost = false;
 		bool isTurnedOff = false;
@@ -73,9 +95,11 @@ void AlarmWebSettingModule::handleWebServerConnections()
 			}
 		}
 
-		Serial.print(hour);
-		Serial.print(':');
-		Serial.println(minute);
+#ifdef DEBUG
+			Serial.print(hour);
+			Serial.print(':');
+			Serial.println(minute);
+#endif // DEBUG
 
 		if (!(isPost^isGet))
 		{
@@ -90,15 +114,28 @@ void AlarmWebSettingModule::handleWebServerConnections()
 			}
 			else if (isValidAlarmTime)
 			{
+				if (hour != state->alarmHour) 
+				{
+					EEPROM.write(0, hour);
+				}
+
+				if (minute != state->alarmMin)
+				{
+					EEPROM.write(1, minute);
+				}
+
 				state->isAlarmOn = true;
 				state->alarmHour = hour;
-				state->alarmMin = minute;
+				state->alarmMin = minute;				
 			}
-			else
+			else if (state->isAlarmOn)
 			{
-				// isTurnedOff must be true here
+				// isTurnedOff must be true here												
+				EEPROM.write(0, ALARM_OFF);
+				EEPROM.write(1, ALARM_OFF);
 				state->isAlarmOn = false;
 			}
+			returnHttpOk(&client);
 		}
 		else
 		{
@@ -191,11 +228,16 @@ void AlarmWebSettingModule::printPage(WiFiEspClient* client)
 		"<script src=\"https://code.jquery.com/jquery-3.2.1.min.js\"></script>"
 		"<script type=\"text/javascript\">"
 		"$('#ok').click(function () {"
-		"$.ajax({ type: 'POST', url: '/h=' + $('#hour').val() + '&m=' + $('#min').val(), data: {} });"
+			"setButtonState(true);"
+			"$.post('/h=' + $('#hour').val() + '&m=' + $('#min').val())"
+				".always(function() {setButtonState(false);});"
 		"});"
 		"$('#off').click(function () {"
-		"$.ajax({ type: 'POST', url: '/off', data: {}, success: function() { $('#hour').val(''); $('#min').val(''); } });"
+			"setButtonState(true);"
+			"$.post('/off', function() {$('#hour, #min').val('');})"				
+				".always(function() {setButtonState(false);});"
 		"});"
+		"function setButtonState(isDisabled) { $('#ok, #off').attr('disabled', isDisabled); }"
 		"</script>"
 		"</body>"
 		"</html>"

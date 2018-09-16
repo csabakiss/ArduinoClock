@@ -19,7 +19,7 @@ void TimeModule::loop()
 {
 	if (now() > nextSync)
 	{
-		Serial.println(F("[time] time sync.."));
+		Serial.println(F("[time] sync.."));
 		time_t currentTime = provideLocalTimeUsingWiFi();		
 		if (currentTime != 0)
 		{
