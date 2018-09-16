@@ -26,11 +26,9 @@ void AlarmWebSettingModule::init(CommonState* state)
 		state->isAlarmOn = true;
 		state->alarmHour = savedHour;
 		state->alarmMin = savedMinute;
-#ifdef DEBUG
 		Serial.print(savedHour);
 		Serial.print(':');
 		Serial.println(savedMinute);
-#endif // DEBUG
 	}
 	else
 	{
@@ -114,15 +112,8 @@ void AlarmWebSettingModule::handleWebServerConnections()
 			}
 			else if (isValidAlarmTime)
 			{
-				if (hour != state->alarmHour) 
-				{
-					EEPROM.write(0, hour);
-				}
-
-				if (minute != state->alarmMin)
-				{
-					EEPROM.write(1, minute);
-				}
+				EEPROM.update(0, hour);
+				EEPROM.update(1, minute);
 
 				state->isAlarmOn = true;
 				state->alarmHour = hour;
@@ -131,8 +122,8 @@ void AlarmWebSettingModule::handleWebServerConnections()
 			else if (state->isAlarmOn)
 			{
 				// isTurnedOff must be true here												
-				EEPROM.write(0, ALARM_OFF);
-				EEPROM.write(1, ALARM_OFF);
+				EEPROM.update(0, ALARM_OFF);
+				EEPROM.update(1, ALARM_OFF);
 				state->isAlarmOn = false;
 			}
 			returnHttpOk(&client);
@@ -230,7 +221,8 @@ void AlarmWebSettingModule::printPage(WiFiEspClient* client)
 		"$('#ok').click(function () {"
 			"setButtonState(true);"
 			"$.post('/h=' + $('#hour').val() + '&m=' + $('#min').val())"
-				".always(function() {setButtonState(false);});"
+				".always(function() {setButtonState(false);})"
+				".fail(function() {alert('Could not set alarm');});"
 		"});"
 		"$('#off').click(function () {"
 			"setButtonState(true);"
